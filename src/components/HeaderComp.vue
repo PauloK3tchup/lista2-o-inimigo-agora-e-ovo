@@ -4,7 +4,7 @@
     <span> | </span>
     <span
       ><RouterLink to="/musica" class="botão">
-        lista de musicas
+        lista de livroes
       </RouterLink></span
     >
   </header>

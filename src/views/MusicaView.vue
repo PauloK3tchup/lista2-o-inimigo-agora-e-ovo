@@ -2,34 +2,56 @@
 export default {
   data() {
     return {
-      nova_musica: "",
-      musicas: [{ nome: "Teu", album: "Pai", banda: "kkkkkkkk" }],
+      novo_livro: "",
+      novo_genero: "",
+      novo_n_pag: "",
+      novo_preco: "",
+      novo_idioma: "",
+      nova_editora: "",
+      novo_isbn: "",
+      livros: [{ nome: "Harry Poggers", autor: "JK Rola", genero: "não binario", paginas: "1 morbilhão", preco: "23", data: "2012-12-12", idioma: "bri'ish", editora: "Teu Pai LTDA", isbn: "127-542-488-55" }],
     };
   },
   methods: {
     salvar() {
       if (
-        this.nova_musica !== "" &&
-        this.novo_album !== "" &&
-        this.nova_banda !== ""
+        this.novo_livro !== "" &&
+        this.novo_autor !== "" &&
+        this.novo_genero !== "" &&
+        this.novo_n_pag !== "" &&
+        this.novo_preco !== "" &&
+        this.novo_idioma !== "" &&
+        this.nova_editora !== "" &&
+        this.novo_isbn !== ""
       ) {
-        const novo_album = this.novo_album;
-        const nova_banda = this.nova_banda;
-        this.musicas.push({
-          nome: this.nova_musica,
-          album: novo_album,
-          banda: nova_banda,
+        const novo_autor = this.novo_autor;
+        const novo_genero = this.novo_genero;
+        this.livros.push({
+          nome: this.novo_livro,
+          autor: this.novo_autor,
+          genero: this.novo_genero,
+          paginas: this.novo_n_pag,
+          preco: this.novo_preco,
+          data: this.nova_data,
+          idioma: this.novo_idioma,
+          editora: this.nova_editora,
+          isbn: this.novo_isbn,
         });
-        this.nova_musica = "";
-        this.novo_album = "";
-        this.nova_banda = "";
+        this.novo_livro == ""
+        this.novo_autor == "" 
+        this.novo_genero == "" 
+        this.novo_n_pag == ""
+        this.novo_preco == ""
+        this.novo_idioma == ""
+        this.nova_editora == ""
+        this.novo_isbn == ""
       } else {
         alert("cu");
       }
     },
-    excluir(musica) {
-      const indice = this.musicas.indexOf(musica);
-      this.musicas.splice(indice, 1);
+    excluir(livro) {
+      const indice = this.livros.indexOf(livro);
+      this.livros.splice(indice, 1);
     },
   },
 };
@@ -39,23 +61,65 @@ export default {
     <div class="inputs">
       <input
         type="text"
-        placeholder="Nome da Músicas"
-        id="nome_musica"
-        v-model="nova_musica"
+        placeholder="Nome do livro"
+        id="nome_livro"
+        v-model="novo_livro"
         @keypress.enter="salvar"
       />
       <input
         type="text"
-        placeholder="Álbum"
-        id="nome_albun"
-        v-model="novo_album"
+        placeholder="Nome do Autor"
+        id="nome_autor"
+        v-model="novo_autor"
         @keypress.enter="salvar"
       />
       <input
         type="text"
-        placeholder="Cantor/banda"
-        id="nome_banda"
-        v-model="nova_banda"
+        placeholder="Gênero(s) do livro"
+        id="nome_genero"
+        v-model="novo_genero"
+        @keypress.enter="salvar"
+      />
+        <input
+        type="number"
+        placeholder="Número de página"
+        id="n_paginas"
+        v-model="novo_n_pag"
+        @keypress.enter="salvar"
+      />
+      <input
+        type="number"
+        placeholder="Preço"
+        id="n_preco"
+        v-model="novo_preco"
+        @keypress.enter="salvar"
+      />
+      <input
+        type="date"
+        placeholder="Data de lançamento"
+        id="n_data"
+        v-model="nova_data"
+        @keypress.enter="salvar"
+      />
+      <input
+        type="text"
+        placeholder="Idioma do livro"
+        id="nome_idioma"
+        v-model="novo_idioma"
+        @keypress.enter="salvar"
+      />
+      <input
+        type="text"
+        placeholder="Editora"
+        id="nome_editora"
+        v-model="nova_editora"
+        @keypress.enter="salvar"
+      />
+      <input
+        type="number"
+        placeholder="ISBN"
+        id="ISBN"
+        v-model="novo_isbn"
         @keypress.enter="salvar"
       />
       <button @click="salvar">Salvar</button>
@@ -65,19 +129,31 @@ export default {
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Álbum</th>
-            <th>Cantor/Banda</th>
+            <th>Autor</th>
+            <th>Gênero(s)</th>
+            <th>Quant. Pág.</th>
+            <th>Preço</th>
+            <th>Data de lançamento</th>
+            <th>Idioma</th>
+            <th>Editora</th>
+            <th>ISBN</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="musica in musicas" :key="musica.nome">
-            <th>{{ musica.nome }}</th>
-            <th>{{ musica.album }}</th>
-            <th>{{ musica.banda }}</th>
+          <tr v-for="livro in livros" :key="livro.nome">
+            <th>{{ livro.nome }}</th>
+            <th>{{ livro.autor }}</th>
+            <th>{{ livro.genero }}</th>
+            <th>{{ livro.paginas }}</th>
+            <th>{{ livro.preco }}</th>
+            <th>{{ livro.data }}</th>
+            <th>{{ livro.idioma }}</th>
+            <th>{{ livro.editora }}</th>
+            <th>{{ livro.isbn }}</th>
             <th>
               <button>✎</button>
-              <button @click="excluir(musica)">☠</button>
+              <button @click="excluir(livro)">☠</button>
             </th>
           </tr>
         </tbody>
@@ -85,3 +161,30 @@ export default {
     </div>
   </main>
 </template>
+<style scoped>
+  table {
+    width: 50%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(0, 0, 0) 0px 0px 0px 3px;
+    text-align: center;
+    margin: 15px;
+  }
+  
+  table thead {
+    background-color: rgb(0, 0, 0);
+    color: white;
+  }
+  
+  table thead th {
+    font-weight: bolder;
+  }
+  
+  table tbody tr:nth-child(odd) {
+    background-color: rgb(209, 209, 209);
+    color: rgb(0, 0, 0);
+  }
+
+  th{
+    padding: 10px;
+    width: fit-content;
+  }
+</style>

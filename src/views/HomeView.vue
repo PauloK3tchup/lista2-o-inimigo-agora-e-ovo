@@ -1,35 +1,35 @@
 <script>
-export default {
-  data() {
-    return {
-      nova_coisa: "",
-      coisas: [{ nome: "Teu pai", obs: "Ele não existekkkk" }],
-    };
-  },
-  methods: {
-    salvar() {
-      if (this.nova_coisa !== "" && this.nova_obs !== "") {
-        const nova_obs = this.nova_obs;
-        this.coisas.push({
-          nome: this.nova_coisa,
-          obs: nova_obs,
-        });
-        this.nova_coisa = "";
-        this.nova_obs = "";
-      } else {
-        alert("cu");
-      }
-    },
-    excluir(coisa) {
-      const indice = this.coisas.indexOf(coisa);
-      this.coisas.splice(indice, 1);
-    },
-  },
-};
+// export default {
+//   data() {
+//     return {
+//       nova_coisa: "",
+//       coisas: [{ nome: "Teu pai", obs: "Ele não existekkkk" }],
+//     };
+//   },
+//   methods: {
+//     salvar() {
+//       if (this.nova_coisa !== "" && this.nova_obs !== "") {
+//         const nova_obs = this.nova_obs;
+//         this.coisas.push({
+//           nome: this.nova_coisa,
+//           obs: nova_obs,
+//         });
+//         this.nova_coisa = "";
+//         this.nova_obs = "";
+//       } else {
+//         alert("cu");
+//       }
+//     },
+//     excluir(coisa) {
+//       const indice = this.coisas.indexOf(coisa);
+//       this.coisas.splice(indice, 1);
+//     },
+//   },
+// };
 </script>
 <template>
   <main>
-    <div class="inputs">
+    <!-- <div class="inputs">
       <input
         type="text"
         placeholder="Nome da coisa"
@@ -66,6 +66,7 @@ export default {
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
+    <h1>Seja bem viado</h1>
   </main>
 </template>
