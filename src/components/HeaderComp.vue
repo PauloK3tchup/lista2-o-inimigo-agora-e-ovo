@@ -11,7 +11,7 @@
 </template>
 <style scoped>
 header {
-  background-color: hotpink;
+  background-color: crimson;
   padding: 1%;
 }
 header span {

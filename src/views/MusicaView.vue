@@ -9,7 +9,19 @@ export default {
       novo_idioma: "",
       nova_editora: "",
       novo_isbn: "",
-      livros: [{ nome: "Harry Poggers", autor: "JK Rola", genero: "não binario", paginas: "1 morbilhão", preco: "23", data: "2012-12-12", idioma: "bri'ish", editora: "Teu Pai LTDA", isbn: "127-542-488-55" }],
+      livros: [
+        {
+          nome: "Harry Poggers",
+          autor: "JK Rola",
+          genero: "não binario",
+          paginas: "1 morbilhão",
+          preco: "23",
+          data: "2012-12-12",
+          idioma: "bri'ish",
+          editora: "Teu Pai LTDA",
+          isbn: "127-542-488-55",
+        },
+      ],
     };
   },
   methods: {
@@ -37,14 +49,14 @@ export default {
           editora: this.nova_editora,
           isbn: this.novo_isbn,
         });
-        this.novo_livro == ""
-        this.novo_autor == "" 
-        this.novo_genero == "" 
-        this.novo_n_pag == ""
-        this.novo_preco == ""
-        this.novo_idioma == ""
-        this.nova_editora == ""
-        this.novo_isbn == ""
+        this.novo_livro == "";
+        this.novo_autor == "";
+        this.novo_genero == "";
+        this.novo_n_pag == "";
+        this.novo_preco == "";
+        this.novo_idioma == "";
+        this.nova_editora == "";
+        this.novo_isbn == "";
       } else {
         alert("cu");
       }
@@ -58,6 +70,7 @@ export default {
 </script>
 <template>
   <main>
+    <h1 class="title">Cadastrar livro:</h1>
     <div class="inputs">
       <input
         type="text"
@@ -80,7 +93,7 @@ export default {
         v-model="novo_genero"
         @keypress.enter="salvar"
       />
-        <input
+      <input
         type="number"
         placeholder="Número de página"
         id="n_paginas"
@@ -162,29 +175,67 @@ export default {
   </main>
 </template>
 <style scoped>
-  table {
-    width: 50%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(0, 0, 0) 0px 0px 0px 3px;
-    text-align: center;
-    margin: 15px;
-  }
-  
-  table thead {
-    background-color: rgb(0, 0, 0);
-    color: white;
-  }
-  
-  table thead th {
-    font-weight: bolder;
-  }
-  
-  table tbody tr:nth-child(odd) {
-    background-color: rgb(209, 209, 209);
-    color: rgb(0, 0, 0);
-  }
+table {
+  width: 80%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(0, 0, 0) 0px 0px 0px 3px;
+  text-align: center;
+  margin: 15px;
+}
 
-  th{
-    padding: 10px;
-    width: fit-content;
-  }
+table thead {
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+table thead th {
+  font-weight: bolder;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: crimson;
+  color: rgb(255, 255, 255);
+}
+
+th {
+  padding: 10px;
+  width: fit-content;
+}
+
+.lista {
+  display: flex;
+  justify-content: center;
+}
+
+.inputs {
+  justify-content: center;
+}
+
+.inputs input {
+  border-radius: 10px;
+  padding: 15px;
+  border: solid 1px;
+  width: 80%;
+  display: table;
+  margin: 10px auto;
+}
+.inputs button {
+  border-radius: 10px;
+  padding: 15px;
+  border: 0ch;
+  display: table;
+  margin: 10px 167px;
+  color: white;
+  background-color: crimson;
+  font-weight: bold;
+  transition: 0.25s;
+}
+
+.inputs button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.title {
+  text-align: center;
+}
 </style>
