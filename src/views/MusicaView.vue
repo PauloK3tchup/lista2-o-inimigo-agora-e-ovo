@@ -129,7 +129,7 @@ export default {
         @keypress.enter="salvar"
       />
       <input
-        type="number"
+        type="text"
         placeholder="ISBN"
         id="ISBN"
         v-model="novo_isbn"

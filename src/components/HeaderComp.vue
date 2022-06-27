@@ -1,12 +1,15 @@
 <template>
   <header>
+    <span class="logo"><RouterLink to="/" class="semdec"> Morbivros </RouterLink></span>
     <span><RouterLink to="/" class="botão"> Home </RouterLink></span>
     <span> | </span>
     <span
       ><RouterLink to="/musica" class="botão">
-        lista de livroes
+        Cadastrar Livros
       </RouterLink></span
     >
+    <span> | </span>
+    <span><RouterLink to="/conta" class="botão"> Conta </RouterLink></span>
   </header>
 </template>
 <style scoped>
@@ -29,5 +32,16 @@ header a.botão {
 
 header a.botão:hover {
   transform: scale(1.1) rotate(5deg);
+}
+
+header a.semdec {
+  text-decoration: none;
+  color: white;
+}
+
+span.logo {
+  font-size: 200%;
+  margin: 10px;
+  font-weight: bolder;
 }
 </style>

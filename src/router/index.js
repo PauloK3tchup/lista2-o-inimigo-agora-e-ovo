@@ -14,6 +14,16 @@ const router = createRouter({
       name: "musica",
       component: () => import("../views/MusicaView.vue"),
     },
+    {
+      path: "/conta",
+      name: "conta",
+      component: () => import("../views/ContaView.vue"),
+    },
+    {
+      path: "/registrar",
+      name: "registrar",
+      component: () => import("../views/CriarContaView.vue"),
+    },
   ],
 });
 
