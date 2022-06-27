@@ -3,11 +3,17 @@
     <span class="logo"><RouterLink to="/" class="semdec"> Morbivros </RouterLink></span>
     <span><RouterLink to="/" class="botão"> Home </RouterLink></span>
     <span> | </span>
-    <span
-      ><RouterLink to="/musica" class="botão">
-        Cadastrar Livros
-      </RouterLink></span
-    >
+    <div class="dropdown">
+      <button class="btn btn-transparent text-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Cadastrar
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><span><RouterLink to="/livros" class="text-dark botão dropdown-item"> Cadastrar Livros </RouterLink></span></li>
+        <li><span><RouterLink to="/editora" class="text-dark botão dropdown-item"> Cadastrar Editora </RouterLink></span></li>
+        <li><span><RouterLink to="/autor" class="text-dark botão dropdown-item"> Cadastrar Autor </RouterLink></span></li>
+        <li><span><RouterLink to="/categoria" class="text-dark botão dropdown-item"> Cadastrar Categoria </RouterLink></span></li>
+      </ul>
+    </div>
     <span> | </span>
     <span><RouterLink to="/conta" class="botão"> Conta </RouterLink></span>
   </header>
@@ -26,8 +32,8 @@ header span {
 header a.botão {
   text-decoration: none;
   display: inline-block;
-  color: white;
   transition: 0.25s;
+  color: white;
 }
 
 header a.botão:hover {
@@ -44,4 +50,9 @@ span.logo {
   margin: 10px;
   font-weight: bolder;
 }
+
+.dropdown {
+  display: inline-block;
+}
+
 </style>
