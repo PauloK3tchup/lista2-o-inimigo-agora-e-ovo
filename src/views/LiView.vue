@@ -36,8 +36,6 @@ export default {
         this.nova_editora !== "" &&
         this.novo_isbn !== ""
       ) {
-        const novo_autor = this.novo_autor;
-        const novo_genero = this.novo_genero;
         this.livros.push({
           nome: this.novo_livro,
           autor: this.novo_autor,

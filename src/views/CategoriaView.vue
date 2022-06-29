@@ -1,58 +1,55 @@
 <script>
 export default {
-  data() {
+  obs() {
     return {
-      novo_autor: "",
-      nova_data: "",
-      autores: [
+      nova_categoria: "",
+      nova_obs: "",
+      categorias: [
         {
-          nome: "Monteiro Meusaco",
-          data: "0001-01-01",
+          nome: "Ação",
+          obs: "Livros de Ação",
         },
       ],
     };
   },
   methods: {
     salvar() {
-      if (
-        this.novo_autor !== "" &&
-        this.nova_data !== ""
-      ) {
-        const novo_autor = this.novo_autor;
-        const nova_data = this.nova_data;
-        this.autores.push({
-          nome: this.novo_autor,
-          data: this.nova_data,
+      if (this.nova_categoria !== "") {
+        const nova_categoria = this.nova_categoria;
+        const nova_obs = this.nova_obs;
+        this.categorias.push({
+          nome: nova_categoria,
+          obs: nova_obs,
         });
-        this.novo_livro == "";
-        this.novo_autor == "";
+        this.nova_obs == "";
+        this.nova_categoria == "";
       } else {
         alert("cu");
       }
     },
-    excluir(autor) {
-      const indice = this.autores.indexOf(autor);
-      this.autores.splice(indice, 1);
+    excluir(categoria) {
+      const indice = this.categorias.indexOf(categoria);
+      this.categorias.splice(indice, 1);
     },
   },
 };
 </script>
 <template>
   <main>
-    <h1 class="title">Cadastrar Autor:</h1>
+    <h1 class="title">Cadastrar categoria:</h1>
     <div class="inputs">
       <input
         type="text"
-        placeholder="Nome do Autor"
-        id="nome_livro"
-        v-model="novo_autor"
+        placeholder="Categoria"
+        id="nome_categoria"
+        v-model="nova_categoria"
         @keypress.enter="salvar"
       />
       <input
-        type="date"
-        placeholder="Data de Nascimento"
-        id="nome_autor"
-        v-model="nova_data"
+        type="text"
+        placeholder="Observação"
+        id="obs"
+        v-model="nova_obs"
         @keypress.enter="salvar"
       />
       <button @click="salvar">Salvar</button>
@@ -61,18 +58,18 @@ export default {
       <table>
         <thead>
           <tr>
-            <th>Autor</th>
-            <th>Data de Nascimento</th>
+            <th>Categoria</th>
+            <th>Observação</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="autor in autores" :key="autor.nome">
-            <th>{{ autor.nome }}</th>
-            <th>{{ autor.data }}</th>
+          <tr v-for="categoria in categorias" :key="categoria.nome">
+            <th>{{ categoria.nome }}</th>
+            <th>{{ categoria.obs }}</th>
             <th>
               <button>✎</button>
-              <button @click="excluir(autor)">☠</button>
+              <button @click="excluir(categoria)">☠</button>
             </th>
           </tr>
         </tbody>
