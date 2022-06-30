@@ -77,20 +77,18 @@ export default {
         v-model="novo_livro"
         @keypress.enter="salvar"
       />
-      <input
-        type="text"
-        placeholder="Nome do Autor"
-        id="nome_autor"
-        v-model="novo_autor"
-        @keypress.enter="salvar"
-      />
-      <input
-        type="text"
-        placeholder="Gênero(s) do livro"
-        id="nome_genero"
-        v-model="novo_genero"
-        @keypress.enter="salvar"
-      />
+      <select name="Selecione o Autor" v-model="novo_autor" id="autor">
+        <option value="" disabled selected>Selecione o Autor</option>
+        <option value="Monteiro Meusaco">Monteiro Meusaco</option>
+        <option value="JK Rola">JK Rola</option>
+        <option value="Machaahc de assiss">Machaahc de assiss</option>
+      </select>
+      <select name="Selecione a categoria" v-model="novo_genero" id="genero">
+        <option value="" disabled selected>Selecione a Categoria</option>
+        <option value="Ação">Ação</option>
+        <option value="Mistério">Mistério</option>
+        <option value="Aventura">Aventura</option>
+      </select>
       <input
         type="number"
         placeholder="Número de página"
@@ -119,13 +117,12 @@ export default {
         v-model="novo_idioma"
         @keypress.enter="salvar"
       />
-      <input
-        type="text"
-        placeholder="Editora"
-        id="nome_editora"
-        v-model="nova_editora"
-        @keypress.enter="salvar"
-      />
+      <select name="Selecione a Editora" v-model="nova_editora" id="editora">
+        <option value="" disabled selected>Selecione a Editora</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
       <input
         type="text"
         placeholder="ISBN"
@@ -208,7 +205,8 @@ th {
   justify-content: center;
 }
 
-.inputs input {
+.inputs input,
+select {
   border-radius: 10px;
   padding: 15px;
   border: solid 1px;
