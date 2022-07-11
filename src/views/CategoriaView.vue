@@ -1,33 +1,37 @@
 <script>
+import axios from "axios";
 export default {
-  obs() {
+  data() {
     return {
       nova_categoria: "",
       nova_obs: "",
-      categorias: [
-        {
-          nome: "Ação",
-          obs: "Livros de Ação",
-        },
-      ],
+      categorias: [],
     };
   },
+  async created(){
+    const categorias = await axios.get("http://localhost:4000/categorias");
+    this.categorias = categorias.data;
+  },
   methods: {
-    salvar() {
-      if (this.nova_categoria !== "") {
-        const nova_categoria = this.nova_categoria;
-        const nova_obs = this.nova_obs;
-        this.categorias.push({
-          nome: nova_categoria,
-          obs: nova_obs,
-        });
-        this.nova_obs == "";
-        this.nova_categoria == "";
+    async salvar() {
+      if (
+        this.nova_categoria !== "" &&
+        this.nova_obs !== ""
+      ){
+        const categoria = {
+          nome: this.nova_categoria,
+          obs: this.nova_obs
+        };
+        const categoria_criada = await axios.post("http://localhost:4000/categorias", categoria);
+        this.categorias.push(categoria_criada.data)
+        this.nova_categoria = "";
+        this.nova_obs = "";
       } else {
         alert("cu");
       }
     },
-    excluir(categoria) {
+    async excluir(categoria) {
+      await axios.delete(`http://localhost:4000/categorias/${categoria.id}`)
       const indice = this.categorias.indexOf(categoria);
       this.categorias.splice(indice, 1);
     },

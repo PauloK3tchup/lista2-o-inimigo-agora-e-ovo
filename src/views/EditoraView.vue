@@ -1,36 +1,37 @@
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       nova_editora: "",
       novo_site: "",
-      editoras: [
-        {
-          nome: "Puts",
-          site: "puts.com.br",
-        },
-      ],
+      editoras: [],
     };
   },
+  async created(){
+    const editoras = await axios.get("http://localhost:4000/editoras");
+    this.editoras = editoras.data;
+  },
   methods: {
-    salvar() {
+    async salvar() {
       if (
         this.nova_editora !== "" &&
         this.novo_site !== ""
-      ) {
-        const nova_editora = this.nova_editora;
-        const novo_site = this.novo_site;
-        this.editoras.push({
+      ){
+        const editora = {
           nome: this.nova_editora,
-          site: this.novo_site,
-        });
-        this.novo_livro == "";
-        this.novo_autor == "";
+          site: this.novo_site
+        };
+        const editora_criada = await axios.post("http://localhost:4000/editoras", editora);
+        this.editoras.push(editora_criada.data)
+        this.nova_editora = "";
+        this.novo_site = "";
       } else {
         alert("cu");
       }
     },
-    excluir(editora) {
+    async excluir(editora) {
+      await axios.delete(`http://localhost:4000/editoras/${editora.id}`)
       const indice = this.editoras.indexOf(editora);
       this.editoras.splice(indice, 1);
     },

@@ -1,36 +1,37 @@
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       novo_autor: "",
       nova_data: "",
-      autores: [
-        {
-          nome: "Monteiro Meusaco",
-          data: "0001-01-01",
-        },
-      ],
+      autores: [],
     };
   },
+  async created(){
+    const autores = await axios.get("http://localhost:4000/autores");
+    this.autores = autores.data;
+  },
   methods: {
-    salvar() {
+    async salvar() {
       if (
         this.novo_autor !== "" &&
         this.nova_data !== ""
-      ) {
-        const novo_autor = this.novo_autor;
-        const nova_data = this.nova_data;
-        this.autores.push({
+      ){
+        const autor = {
           nome: this.novo_autor,
-          data: this.nova_data,
-        });
-        this.novo_livro == "";
-        this.novo_autor == "";
+          data: this.nova_data
+        };
+        const autor_criada = await axios.post("http://localhost:4000/autores", autor);
+        this.autores.push(autor_criada.data)
+        this.novo_autor = "";
+        this.nova_data = "";
       } else {
         alert("cu");
       }
     },
-    excluir(autor) {
+    async excluir(autor) {
+      await axios.delete(`http://localhost:4000/autores/${autor.id}`)
       const indice = this.autores.indexOf(autor);
       this.autores.splice(indice, 1);
     },
