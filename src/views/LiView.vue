@@ -1,60 +1,51 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       novo_livro: "",
-      novo_genero: "",
-      novo_n_pag: "",
-      novo_preco: "",
-      novo_idioma: "",
-      nova_editora: "",
-      novo_isbn: "",
-      livros: [
-        {
-          nome: "Harry Poggers",
-          autor: "JK Rola",
-          genero: "não binario",
-          paginas: "1 morbilhão",
-          preco: "23",
-          data: "2012-12-12",
-          idioma: "bri'ish",
-          editora: "Teu Pai LTDA",
-          isbn: "127-542-488-55",
-        },
-      ],
+      nova_categoria: "",
+      livros: [],
+      categorias: [],
+      autores: [],
+      editoras: [],
     };
   },
+  async created() {
+    await this.buscarTodosLivros();
+    await this.buscarTodasCategorias();
+    await this.buscarTodosAutores();
+    await this.buscarTodasEditoras();
+    },
   methods: {
-    salvar() {
+    async buscarTodosLivros(){
+    const livros = await axios.get("http://localhost:4000/livros");
+    this.livros = livros.data;
+    },
+    async buscarTodasCategorias(){
+    const categorias = await axios.get("http://localhost:4000/categorias");
+    this.categorias = categorias.data;
+    },
+    async buscarTodosAutores(){
+    const autores = await axios.get("http://localhost:4000/autores");
+    this.autores = autores.data;
+    },
+    async buscarTodasEditoras(){
+    const editoras = await axios.get("http://localhost:4000/editoras");
+    this.editoras = editoras.data;
+    },
+    async salvar() {
       if (
         this.novo_livro !== "" &&
-        this.novo_autor !== "" &&
-        this.novo_genero !== "" &&
-        this.novo_n_pag !== "" &&
-        this.novo_preco !== "" &&
-        this.novo_idioma !== "" &&
-        this.nova_editora !== "" &&
-        this.novo_isbn !== ""
+        this.nova_categoria !== ""
       ) {
-        this.livros.push({
+        const livro = {
           nome: this.novo_livro,
-          autor: this.novo_autor,
-          genero: this.novo_genero,
-          paginas: this.novo_n_pag,
-          preco: this.novo_preco,
-          data: this.nova_data,
-          idioma: this.novo_idioma,
-          editora: this.nova_editora,
-          isbn: this.novo_isbn,
-        });
-        this.novo_livro == "";
-        this.novo_autor == "";
-        this.novo_genero == "";
-        this.novo_n_pag == "";
-        this.novo_preco == "";
-        this.novo_idioma == "";
-        this.nova_editora == "";
-        this.novo_isbn == "";
+          categoria: this.nova_categoria,
+        }
+        const livro_criado = await axios.post("http://localhost:4000/livros", livro);
+        this.livros.push(livro_criado.data)
       } else {
         alert("cu");
       }
@@ -78,16 +69,10 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione o Autor" v-model="novo_autor" id="autor">
-        <option value="" disabled selected>Selecione o Autor</option>
-        <option value="Monteiro Meusaco">Monteiro Meusaco</option>
-        <option value="JK Rola">JK Rola</option>
-        <option value="Machaahc de assiss">Machaahc de assiss</option>
+        <option v-for="autor in autores" :key="autor.id" :value="autor.nome">{{ autor.nome }}</option>
       </select>
-      <select name="Selecione a categoria" v-model="novo_genero" id="genero">
-        <option value="" disabled selected>Selecione a Categoria</option>
-        <option value="Ação">Ação</option>
-        <option value="Mistério">Mistério</option>
-        <option value="Aventura">Aventura</option>
+      <select name="Selecione a categoria" v-model="nova_categoria" id="categoria">
+        <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.nome">{{ categoria.nome }}</option>
       </select>
       <input
         type="number"
@@ -118,10 +103,7 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione a Editora" v-model="nova_editora" id="editora">
-        <option value="" disabled selected>Selecione a Editora</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
+        <option v-for="editora in editoras" :key="editora.id" :value="editora.nome">{{ editora.nome }}</option>
       </select>
       <input
         type="text"
@@ -152,7 +134,7 @@ export default {
           <tr v-for="livro in livros" :key="livro.nome">
             <th>{{ livro.nome }}</th>
             <th>{{ livro.autor }}</th>
-            <th>{{ livro.genero }}</th>
+            <th>{{ livro.categoria }}</th>
             <th>{{ livro.paginas }}</th>
             <th>{{ livro.preco }}</th>
             <th>{{ livro.data }}</th>
