@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
@@ -24,23 +24,23 @@ export default {
     await this.buscarTodasCategorias();
     await this.buscarTodosAutores();
     await this.buscarTodasEditoras();
-    },
+  },
   methods: {
-    async buscarTodosLivros(){
-    const livros = await axios.get("http://localhost:4000/livros");
-    this.livros = livros.data;
+    async buscarTodosLivros() {
+      const livros = await axios.get("http://localhost:4000/livros");
+      this.livros = livros.data;
     },
-    async buscarTodasCategorias(){
-    const categorias = await axios.get("http://localhost:4000/categorias");
-    this.categorias = categorias.data;
+    async buscarTodasCategorias() {
+      const categorias = await axios.get("http://localhost:4000/categorias");
+      this.categorias = categorias.data;
     },
-    async buscarTodosAutores(){
-    const autores = await axios.get("http://localhost:4000/autores");
-    this.autores = autores.data;
+    async buscarTodosAutores() {
+      const autores = await axios.get("http://localhost:4000/autores");
+      this.autores = autores.data;
     },
-    async buscarTodasEditoras(){
-    const editoras = await axios.get("http://localhost:4000/editoras");
-    this.editoras = editoras.data;
+    async buscarTodasEditoras() {
+      const editoras = await axios.get("http://localhost:4000/editoras");
+      this.editoras = editoras.data;
     },
     async salvar() {
       if (
@@ -64,15 +64,18 @@ export default {
           isbn: this.novo_isbn,
           autor: this.novo_autor,
           editora: this.nova_editora,
-        }
-        const livro_criado = await axios.post("http://localhost:4000/livros", livro);
-        this.livros.push(livro_criado.data)
+        };
+        const livro_criado = await axios.post(
+          "http://localhost:4000/livros",
+          livro
+        );
+        this.livros.push(livro_criado.data);
       } else {
         alert("cu");
       }
     },
     async excluir(livro) {
-      await axios.delete(`http://localhost:4000/livros/${livro.id}`)
+      await axios.delete(`http://localhost:4000/livros/${livro.id}`);
       const indice = this.livros.indexOf(livro);
       this.livros.splice(indice, 1);
     },
@@ -91,10 +94,28 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione o Autor" v-model="novo_autor" id="autor">
-        <option v-for="autor in autores" :key="autor.id" :value="autor.nome">{{ autor.nome }}</option>
+        <option value="" disabled>
+          Selecione a Editora
+        </option>
+        <option v-for="autor in autores" :key="autor.id" :value="autor.nome">
+          {{ autor.nome }}
+        </option>
       </select>
-      <select name="Selecione a categoria" v-model="nova_categoria" id="categoria">
-        <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.nome">{{ categoria.nome }}</option>
+      <select
+        name="Selecione a categoria"
+        v-model="nova_categoria"
+        id="categoria"
+      >
+        <option value="" disabled>
+          Selecione a Categoria
+        </option>
+        <option
+          v-for="categoria in categorias"
+          :key="categoria.id"
+          :value="categoria.nome"
+        >
+          {{ categoria.nome }}
+        </option>
       </select>
       <input
         type="number"
@@ -125,7 +146,16 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione a Editora" v-model="nova_editora" id="editora">
-        <option v-for="editora in editoras" :key="editora.id" :value="editora.nome">{{ editora.nome }}</option>
+        <option value="" disabled>
+          Selecione a Editora
+        </option>
+        <option
+          v-for="editora in editoras"
+          :key="editora.id"
+          :value="editora.nome"
+        >
+          {{ editora.nome }}
+        </option>
       </select>
       <input
         type="text"
