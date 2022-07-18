@@ -6,6 +6,13 @@ export default {
     return {
       novo_livro: "",
       nova_categoria: "",
+      novo_preco: "",
+      nova_data: "",
+      novo_n_pag: "",
+      novo_idioma: "",
+      novo_isbn: "",
+      novo_autor: "",
+      nova_editora: "",
       livros: [],
       categorias: [],
       autores: [],
@@ -38,11 +45,25 @@ export default {
     async salvar() {
       if (
         this.novo_livro !== "" &&
+        this.novo_preco !== "" &&
+        this.nova_data !== "" &&
+        this.novo_n_pag !== "" &&
+        this.novo_idioma !== "" &&
+        this.novo_isbn !== "" &&
+        this.novo_autor !== "" &&
+        this.novo_editora !== "" &&
         this.nova_categoria !== ""
       ) {
         const livro = {
           nome: this.novo_livro,
           categoria: this.nova_categoria,
+          preco: this.novo_preco,
+          data: this.nova_data,
+          paginas: this.novo_n_pag,
+          idioma: this.novo_idioma,
+          isbn: this.novo_isbn,
+          autor: this.novo_autor,
+          editora: this.nova_editora,
         }
         const livro_criado = await axios.post("http://localhost:4000/livros", livro);
         this.livros.push(livro_criado.data)
@@ -50,7 +71,8 @@ export default {
         alert("cu");
       }
     },
-    excluir(livro) {
+    async excluir(livro) {
+      await axios.delete(`http://localhost:4000/livros/${livro.id}`)
       const indice = this.livros.indexOf(livro);
       this.livros.splice(indice, 1);
     },
@@ -120,7 +142,7 @@ export default {
           <tr>
             <th>Nome</th>
             <th>Autor</th>
-            <th>Gênero(s)</th>
+            <th>categorias</th>
             <th>Quant. Pág.</th>
             <th>Preço</th>
             <th>Data de lançamento</th>
