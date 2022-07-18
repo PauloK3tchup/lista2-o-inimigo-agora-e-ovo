@@ -172,7 +172,7 @@ export default {
           <tr>
             <th>Nome</th>
             <th>Autor</th>
-            <th>categorias</th>
+            <th>Categorias</th>
             <th>Quant. Pág.</th>
             <th>Preço</th>
             <th>Data de lançamento</th>
