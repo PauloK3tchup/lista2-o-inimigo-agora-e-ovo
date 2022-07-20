@@ -71,7 +71,7 @@ export default {
         );
         this.livros.push(livro_criado.data);
       } else {
-        alert("cu");
+        alert("Santo, santo Santo, Senhor Deus do universo Santo, santo Santo, Senhor Deus do universo O céu e a terra (os céus e a terra) Proclamam vossa glória Hosana nas alturas! (Nas alturas) Bendito o que vem (bendito o que vem) Em nome do Senhor (em nome do Senhor) Hosana nas alturas! (Hosana nas alturas) Santo, santo Santo, Senhor Deus do universo Santo, santo (santo) Santo, Senhor Deus do universo");
       }
     },
     async excluir(livro) {

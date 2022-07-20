@@ -1,39 +1,32 @@
 <script>
-import axios from "axios";
+import CategoriasApi from "@/api/categorias.js";
+const categoriasApi = new CategoriasApi();
 export default {
   data() {
     return {
-      nova_categoria: "",
-      nova_obs: "",
+      categoria: {},
       categorias: [],
     };
   },
-  async created(){
-    const categorias = await axios.get("http://localhost:4000/categorias");
-    this.categorias = categorias.data;
+  async created() {
+    this.categorias = await categoriasApi.buscarTodasCategorias();
   },
   methods: {
     async salvar() {
-      if (
-        this.nova_categoria !== "" &&
-        this.nova_obs !== ""
-      ){
-        const categoria = {
-          nome: this.nova_categoria,
-          obs: this.nova_obs
-        };
-        const categoria_criada = await axios.post("http://localhost:4000/categorias", categoria);
-        this.categorias.push(categoria_criada.data)
-        this.nova_categoria = "";
-        this.nova_obs = "";
+      if (this.categoria.id) {
+        await categoriasApi.atualizarCategoria(this.categoria);
       } else {
-        alert("cu");
+        await categoriasApi.adicionarCategoria(this.categoria);
       }
+      this.categorias = await categoriasApi.buscarTodasCategorias();
+      this.categoria = {};
     },
     async excluir(categoria) {
-      await axios.delete(`http://localhost:4000/categorias/${categoria.id}`)
-      const indice = this.categorias.indexOf(categoria);
-      this.categorias.splice(indice, 1);
+      await categoriasApi.excluirCategoria(categoria.id);
+      this.categorias = await categoriasApi.buscarTodasCategorias();
+    },
+    editar(categoria) {
+      Object.assign(this.categoria, categoria);
     },
   },
 };
@@ -46,14 +39,14 @@ export default {
         type="text"
         placeholder="Categoria"
         id="nome_categoria"
-        v-model="nova_categoria"
+        v-model="categoria.nome"
         @keypress.enter="salvar"
       />
       <input
         type="text"
         placeholder="Observação"
         id="obs"
-        v-model="nova_obs"
+        v-model="categoria.obs"
         @keypress.enter="salvar"
       />
       <button @click="salvar">Salvar</button>
@@ -72,7 +65,7 @@ export default {
             <th>{{ categoria.nome }}</th>
             <th>{{ categoria.obs }}</th>
             <th>
-              <button>✎</button>
+              <button @click="editar(categoria)">✎</button>
               <button @click="excluir(categoria)">☠</button>
             </th>
           </tr>

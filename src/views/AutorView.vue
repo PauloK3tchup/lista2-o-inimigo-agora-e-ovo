@@ -1,39 +1,32 @@
 <script>
-import axios from "axios";
+import AutoresApi from "@/api/autores.js";
+const autoresApi = new AutoresApi();
 export default {
   data() {
     return {
-      novo_autor: "",
-      nova_data: "",
+      autor: {},
       autores: [],
     };
   },
-  async created(){
-    const autores = await axios.get("http://localhost:4000/autores");
-    this.autores = autores.data;
+  async created() {
+    this.autores = await autoresApi.buscarTodosAutores();
   },
   methods: {
     async salvar() {
-      if (
-        this.novo_autor !== "" &&
-        this.nova_data !== ""
-      ){
-        const autor = {
-          nome: this.novo_autor,
-          data: this.nova_data
-        };
-        const autor_criada = await axios.post("http://localhost:4000/autores", autor);
-        this.autores.push(autor_criada.data)
-        this.novo_autor = "";
-        this.nova_data = "";
+      if (this.autor.id) {
+        await autoresApi.atualizarAutor(this.autor);
       } else {
-        alert("cu");
+        await autoresApi.adicionarAutor(this.autor);
       }
+      this.autores = await autoresApi.buscarTodosAutores();
+      this.autor = {};
     },
     async excluir(autor) {
-      await axios.delete(`http://localhost:4000/autores/${autor.id}`)
-      const indice = this.autores.indexOf(autor);
-      this.autores.splice(indice, 1);
+      await autoresApi.excluirAutor(autor.id);
+      this.autores = await autoresApi.buscarTodosAutores();
+    },
+    editar(autor) {
+      Object.assign(this.autor, autor);
     },
   },
 };
@@ -46,14 +39,14 @@ export default {
         type="text"
         placeholder="Nome do Autor"
         id="nome_livro"
-        v-model="novo_autor"
+        v-model="autor.nome"
         @keypress.enter="salvar"
       />
       <input
         type="date"
         placeholder="Data de Nascimento"
         id="nome_autor"
-        v-model="nova_data"
+        v-model="autor.data"
         @keypress.enter="salvar"
       />
       <button @click="salvar">Salvar</button>
@@ -72,7 +65,7 @@ export default {
             <th>{{ autor.nome }}</th>
             <th>{{ autor.data }}</th>
             <th>
-              <button>✎</button>
+              <button @click="editar(autor)">✎</button>
               <button @click="excluir(autor)">☠</button>
             </th>
           </tr>

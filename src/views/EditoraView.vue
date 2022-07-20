@@ -1,39 +1,32 @@
 <script>
-import axios from "axios";
+import EditorasApi from "@/api/editoras.js";
+const editorasApi = new EditorasApi();
 export default {
   data() {
     return {
-      nova_editora: "",
-      novo_site: "",
+      editora: {},
       editoras: [],
     };
   },
-  async created(){
-    const editoras = await axios.get("http://localhost:4000/editoras");
-    this.editoras = editoras.data;
+  async created() {
+    this.editoras = await editorasApi.buscarTodasEditoras();
   },
   methods: {
     async salvar() {
-      if (
-        this.nova_editora !== "" &&
-        this.novo_site !== ""
-      ){
-        const editora = {
-          nome: this.nova_editora,
-          site: this.novo_site
-        };
-        const editora_criada = await axios.post("http://localhost:4000/editoras", editora);
-        this.editoras.push(editora_criada.data)
-        this.nova_editora = "";
-        this.novo_site = "";
+      if (this.editora.id) {
+        await editorasApi.atualizarEditora(this.editora);
       } else {
-        alert("cu");
+        await editorasApi.adicionarEditora(this.editora);
       }
+      this.editoras = await editorasApi.buscarTodasEditoras();
+      this.editora = {};
     },
     async excluir(editora) {
-      await axios.delete(`http://localhost:4000/editoras/${editora.id}`)
-      const indice = this.editoras.indexOf(editora);
-      this.editoras.splice(indice, 1);
+      await editorasApi.excluirEditora(editora.id);
+      this.editoras = await editorasApi.buscarTodasEditoras();
+    },
+    editar(editora) {
+      Object.assign(this.editora, editora);
     },
   },
 };
@@ -46,14 +39,14 @@ export default {
         type="text"
         placeholder="Nome da Editora"
         id="nome_livro"
-        v-model="nova_editora"
+        v-model="editora.nome"
         @keypress.enter="salvar"
       />
       <input
         type="text"
         placeholder="Site da Editora"
         id="nome_autor"
-        v-model="novo_site"
+        v-model="editora.site"
         @keypress.enter="salvar"
       />
       <button @click="salvar">Salvar</button>
@@ -72,7 +65,7 @@ export default {
             <th>{{ editora.nome }}</th>
             <th>{{ editora.site }}</th>
             <th>
-              <button>✎</button>
+              <button @click="editar(editora)">✎</button>
               <button @click="excluir(editora)">☠</button>
             </th>
           </tr>
