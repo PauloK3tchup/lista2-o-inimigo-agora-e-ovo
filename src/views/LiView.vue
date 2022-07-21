@@ -183,7 +183,7 @@ export default {
             <th>{{ livro.autor }}</th>
             <th>{{ livro.categoria }}</th>
             <th>{{ livro.paginas }} pgs.</th>
-            <th>{{ livro.preco }}</th>
+            <th>R${{ livro.preco }}</th>
             <th>{{ livro.data }}</th>
             <th>{{ livro.idioma }}</th>
             <th>{{ livro.editora }}</th>
