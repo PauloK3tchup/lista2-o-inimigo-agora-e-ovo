@@ -7,7 +7,6 @@ const categoriasApi = new CategoriasApi();
 const editorasApi = new EditorasApi();
 const autoresApi = new AutoresApi();
 
-
 export default {
   data() {
     return {
