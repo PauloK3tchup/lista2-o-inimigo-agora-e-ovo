@@ -182,7 +182,7 @@ export default {
             <th>{{ livro.nome }}</th>
             <th>{{ livro.autor }}</th>
             <th>{{ livro.categoria }}</th>
-            <th>{{ livro.paginas }}</th>
+            <th>{{ livro.paginas }} pgs.</th>
             <th>{{ livro.preco }}</th>
             <th>{{ livro.data }}</th>
             <th>{{ livro.idioma }}</th>
