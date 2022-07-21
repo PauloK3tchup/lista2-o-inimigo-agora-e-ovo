@@ -1,5 +1,12 @@
 <script>
 import axios from "axios";
+import CategoriasApi from "@/api/categorias.js";
+import EditorasApi from "@/api/editoras.js";
+import AutoresApi from "@/api/autores.js";
+const categoriasApi = new CategoriasApi();
+const editorasApi = new EditorasApi();
+const autoresApi = new AutoresApi();
+
 
 export default {
   data() {
@@ -21,26 +28,14 @@ export default {
   },
   async created() {
     await this.buscarTodosLivros();
-    await this.buscarTodasCategorias();
-    await this.buscarTodosAutores();
-    await this.buscarTodasEditoras();
+    this.categorias = await categoriasApi.buscarTodasCategorias();
+    this.autores = await autoresApi.buscarTodosAutores();
+    this.editoras = await editorasApi.buscarTodasEditoras();
   },
   methods: {
     async buscarTodosLivros() {
       const livros = await axios.get("http://localhost:4000/livros");
       this.livros = livros.data;
-    },
-    async buscarTodasCategorias() {
-      const categorias = await axios.get("http://localhost:4000/categorias");
-      this.categorias = categorias.data;
-    },
-    async buscarTodosAutores() {
-      const autores = await axios.get("http://localhost:4000/autores");
-      this.autores = autores.data;
-    },
-    async buscarTodasEditoras() {
-      const editoras = await axios.get("http://localhost:4000/editoras");
-      this.editoras = editoras.data;
     },
     async salvar() {
       if (
