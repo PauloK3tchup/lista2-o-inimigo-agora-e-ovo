@@ -1,80 +1,86 @@
 <script>
-import axios from "axios";
-import CategoriasApi from "@/api/categorias.js";
-import EditorasApi from "@/api/editoras.js";
-import AutoresApi from "@/api/autores.js";
-const categoriasApi = new CategoriasApi();
-const editorasApi = new EditorasApi();
-const autoresApi = new AutoresApi();
+  import axios from "axios";
+  import CategoriasApi from "@/api/categorias.js";
+  import EditorasApi from "@/api/editoras.js";
+  import AutoresApi from "@/api/autores.js";
+  const categoriasApi = new CategoriasApi();
+  const editorasApi = new EditorasApi();
+  const autoresApi = new AutoresApi();
 
-export default {
-  data() {
-    return {
-      novo_livro: "",
-      nova_categoria: "",
-      novo_preco: "",
-      nova_data: "",
-      novo_n_pag: "",
-      novo_idioma: "",
-      novo_isbn: "",
-      novo_autor: "",
-      nova_editora: "",
-      livros: [],
-      categorias: [],
-      autores: [],
-      editoras: [],
-    };
-  },
-  async created() {
-    await this.buscarTodosLivros();
-    this.categorias = await categoriasApi.buscarTodasCategorias();
-    this.autores = await autoresApi.buscarTodosAutores();
-    this.editoras = await editorasApi.buscarTodasEditoras();
-  },
-  methods: {
-    async buscarTodosLivros() {
-      const livros = await axios.get("http://localhost:4000/livros");
-      this.livros = livros.data;
+  export default {
+    data() {
+      return {
+        novo_livro: "",
+        nova_categoria: "",
+        novo_preco: "",
+        nova_data: "",
+        novo_n_pag: "",
+        novo_idioma: "",
+        novo_isbn: "",
+        novo_autor: "",
+        nova_editora: "",
+        livros: [],
+        categorias: [],
+        autores: [],
+        editoras: [],
+      };
     },
-    async salvar() {
-      if (
-        this.novo_livro !== "" &&
-        this.novo_preco !== "" &&
-        this.nova_data !== "" &&
-        this.novo_n_pag !== "" &&
-        this.novo_idioma !== "" &&
-        this.novo_isbn !== "" &&
-        this.novo_autor !== "" &&
-        this.novo_editora !== "" &&
-        this.nova_categoria !== ""
-      ) {
-        const livro = {
-          nome: this.novo_livro,
-          categoria: this.nova_categoria,
-          preco: this.novo_preco,
-          data: this.nova_data,
-          paginas: this.novo_n_pag,
-          idioma: this.novo_idioma,
-          isbn: this.novo_isbn,
-          autor: this.novo_autor,
-          editora: this.nova_editora,
-        };
-        const livro_criado = await axios.post(
-          "http://localhost:4000/livros",
-          livro
+    async created() {
+      await this.buscarTodosLivros();
+      this.categorias = await categoriasApi.buscarTodasCategorias();
+      this.autores = await autoresApi.buscarTodosAutores();
+      this.editoras = await editorasApi.buscarTodasEditoras();
+    },
+    methods: {
+      async buscarTodosLivros() {
+        const livros = await axios.get(
+          "https://morbivros.herokuapp.com/livros"
         );
-        this.livros.push(livro_criado.data);
-      } else {
-        alert("Santo, santo Santo, Senhor Deus do universo Santo, santo Santo, Senhor Deus do universo O céu e a terra (os céus e a terra) Proclamam vossa glória Hosana nas alturas! (Nas alturas) Bendito o que vem (bendito o que vem) Em nome do Senhor (em nome do Senhor) Hosana nas alturas! (Hosana nas alturas) Santo, santo Santo, Senhor Deus do universo Santo, santo (santo) Santo, Senhor Deus do universo");
-      }
+        this.livros = livros.data;
+      },
+      async salvar() {
+        if (
+          this.novo_livro !== "" &&
+          this.novo_preco !== "" &&
+          this.nova_data !== "" &&
+          this.novo_n_pag !== "" &&
+          this.novo_idioma !== "" &&
+          this.novo_isbn !== "" &&
+          this.novo_autor !== "" &&
+          this.novo_editora !== "" &&
+          this.nova_categoria !== ""
+        ) {
+          const livro = {
+            nome: this.novo_livro,
+            categoria: this.nova_categoria,
+            preco: this.novo_preco,
+            data: this.nova_data,
+            paginas: this.novo_n_pag,
+            idioma: this.novo_idioma,
+            isbn: this.novo_isbn,
+            autor: this.novo_autor,
+            editora: this.nova_editora,
+          };
+          const livro_criado = await axios.post(
+            "https://morbivros.herokuapp.com/livros",
+            livro
+          );
+          this.livros.push(livro_criado.data);
+        } else {
+          alert(
+            "Santo, santo Santo, Senhor Deus do universo Santo, santo Santo, Senhor Deus do universo O céu e a terra (os céus e a terra) Proclamam vossa glória Hosana nas alturas! (Nas alturas) Bendito o que vem (bendito o que vem) Em nome do Senhor (em nome do Senhor) Hosana nas alturas! (Hosana nas alturas) Santo, santo Santo, Senhor Deus do universo Santo, santo (santo) Santo, Senhor Deus do universo"
+          );
+        }
+      },
+      async excluir(livro) {
+        await axios.delete(
+          `https://morbivros.herokuapp.com/livros/${livro.id}`
+        );
+        const indice = this.livros.indexOf(livro);
+        this.livros.splice(indice, 1);
+      },
     },
-    async excluir(livro) {
-      await axios.delete(`http://localhost:4000/livros/${livro.id}`);
-      const indice = this.livros.indexOf(livro);
-      this.livros.splice(indice, 1);
-    },
-  },
-};
+  };
 </script>
 <template>
   <main>
@@ -88,9 +94,7 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione o Autor" v-model="novo_autor" id="autor">
-        <option value="" disabled>
-          Selecione a Editora
-        </option>
+        <option value="" disabled>Selecione a Editora</option>
         <option v-for="autor in autores" :key="autor.id" :value="autor.nome">
           {{ autor.nome }}
         </option>
@@ -100,9 +104,7 @@ export default {
         v-model="nova_categoria"
         id="categoria"
       >
-        <option value="" disabled>
-          Selecione a Categoria
-        </option>
+        <option value="" disabled>Selecione a Categoria</option>
         <option
           v-for="categoria in categorias"
           :key="categoria.id"
@@ -140,9 +142,7 @@ export default {
         @keypress.enter="salvar"
       />
       <select name="Selecione a Editora" v-model="nova_editora" id="editora">
-        <option value="" disabled>
-          Selecione a Editora
-        </option>
+        <option value="" disabled>Selecione a Editora</option>
         <option
           v-for="editora in editoras"
           :key="editora.id"
@@ -198,68 +198,68 @@ export default {
   </main>
 </template>
 <style scoped>
-table {
-  width: 80%;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(0, 0, 0) 0px 0px 0px 3px;
-  text-align: center;
-  margin: 15px;
-}
+  table {
+    width: 80%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(0, 0, 0) 0px 0px 0px 3px;
+    text-align: center;
+    margin: 15px;
+  }
 
-table thead {
-  background-color: rgb(0, 0, 0);
-  color: white;
-}
+  table thead {
+    background-color: rgb(0, 0, 0);
+    color: white;
+  }
 
-table thead th {
-  font-weight: bolder;
-}
+  table thead th {
+    font-weight: bolder;
+  }
 
-table tbody tr:nth-child(odd) {
-  background-color: crimson;
-  color: rgb(255, 255, 255);
-}
+  table tbody tr:nth-child(odd) {
+    background-color: crimson;
+    color: rgb(255, 255, 255);
+  }
 
-th {
-  padding: 10px;
-  width: fit-content;
-}
+  th {
+    padding: 10px;
+    width: fit-content;
+  }
 
-.lista {
-  display: flex;
-  justify-content: center;
-}
+  .lista {
+    display: flex;
+    justify-content: center;
+  }
 
-.inputs {
-  justify-content: center;
-}
+  .inputs {
+    justify-content: center;
+  }
 
-.inputs input,
-select {
-  border-radius: 10px;
-  padding: 15px;
-  border: solid 1px;
-  width: 80%;
-  display: table;
-  margin: 10px auto;
-}
-.inputs button {
-  border-radius: 10px;
-  padding: 15px;
-  border: 0ch;
-  display: table;
-  margin: 10px 167px;
-  color: white;
-  background-color: crimson;
-  font-weight: bold;
-  transition: 0.25s;
-}
+  .inputs input,
+  select {
+    border-radius: 10px;
+    padding: 15px;
+    border: solid 1px;
+    width: 80%;
+    display: table;
+    margin: 10px auto;
+  }
+  .inputs button {
+    border-radius: 10px;
+    padding: 15px;
+    border: 0ch;
+    display: table;
+    margin: 10px 167px;
+    color: white;
+    background-color: crimson;
+    font-weight: bold;
+    transition: 0.25s;
+  }
 
-.inputs button:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-}
+  .inputs button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 
-.title {
-  text-align: center;
-}
+  .title {
+    text-align: center;
+  }
 </style>
